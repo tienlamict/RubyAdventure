@@ -4,22 +4,34 @@ using UnityEngine;
 
 public class RubyController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //This creates a new variable called rigidbody2d to store the Rigidbody and access it from anywhere inside your script
+    Rigidbody2D rigibody;
+
+    float horizontal;
+    float vertical;
+
     void Start()
     {
         //QualitySettings.vSyncCount = 0;
         //Application.targetFrameRate = 10;
+        rigibody = GetComponent<Rigidbody2D>(); // Gan Rigibody cua obj dc gan script nay vao bien rigibody
     }
 
-    // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+         horizontal = Input.GetAxis("Horizontal");
+         vertical = Input.GetAxis("Vertical");
+    }
 
-        Vector2 pos = transform.position;
-        pos.x = pos.x + 3f * horizontal * Time.deltaTime;
-        pos.y = pos.y + 3f * vertical * Time.deltaTime;
-        transform.position = pos;
+    private void FixedUpdate()
+    {
+        Vector2 pos = rigibody.position;
+        pos.x = pos.x + 5f * horizontal * Time.deltaTime;
+        pos.y = pos.y + 5f * vertical * Time.deltaTime;
+
+        /* In the same way, instead of setting the new position with transform.position = position; 
+         you are now doing it with the Rigidbody position. This line of code will move the Rigidbody 
+         to where you want, but will stop it mid-way instead if it collides with another Collider in that movement */
+        rigibody.MovePosition(pos);
     }
 }
