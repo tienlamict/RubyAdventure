@@ -22,6 +22,7 @@ public class RubyController : MonoBehaviour
     float horizontal;
     float vertical;
 
+
     void Start()
     {
         //QualitySettings.vSyncCount = 0;
@@ -34,6 +35,7 @@ public class RubyController : MonoBehaviour
     {
          horizontal = Input.GetAxis("Horizontal");
          vertical = Input.GetAxis("Vertical");
+
 
         if (isInvincible)   
         {
