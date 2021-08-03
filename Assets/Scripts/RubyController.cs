@@ -22,11 +22,14 @@ public class RubyController : MonoBehaviour
     float horizontal;
     float vertical;
 
+    Animator animator;
+    Vector2 lookDirection = new Vector2(1, 0);
 
     void Start()
     {
         //QualitySettings.vSyncCount = 0;
         //Application.targetFrameRate = 10;
+        animator = GetComponent<Animator>();
         rigibody = GetComponent<Rigidbody2D>(); // Gan Rigibody cua obj dc gan script nay vao bien rigibody
         currentHealth = maxHealth;
     }
@@ -35,6 +38,18 @@ public class RubyController : MonoBehaviour
     {
          horizontal = Input.GetAxis("Horizontal");
          vertical = Input.GetAxis("Vertical");
+
+        Vector2 move = new Vector2(horizontal, vertical);
+
+        if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
+        {
+            lookDirection.Set(move.x, move.y);
+            lookDirection.Normalize();
+        }
+
+        animator.SetFloat("Look X", lookDirection.x);
+        animator.SetFloat("Look Y", lookDirection.y);
+        animator.SetFloat("Speed", move.magnitude);
 
 
         if (isInvincible)   
